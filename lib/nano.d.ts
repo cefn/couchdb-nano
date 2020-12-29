@@ -16,6 +16,19 @@ declare function nano(
 ): nano.ServerScope;
 
 declare namespace nano {
+
+  export type JsonPrimitive = number | string | boolean | null;
+
+  export type JsonEntry = JsonPrimitive | JsonArray | JsonMap;
+
+  export type JsonArray = JsonEntry[];
+
+  export type JsonMap = {
+    [key: string]: JsonEntry;
+  };
+
+  export type Key = JsonEntry;
+
   interface RequestDefaultOptionsAuth {
     username: string,
     password: string
@@ -472,7 +485,7 @@ declare namespace nano {
   }
 
   interface BulkFetchDocsWrapper {
-    keys: string[];
+    keys: Key[];
   }
 
   // -------------------------------------
@@ -972,10 +985,10 @@ declare namespace nano {
     descending?: boolean;
 
     // Stop returning records when the specified key is reached.
-    endkey?: string;
+    endkey?: Key;
 
     // Stop returning records when the specified key is reached. end_key is an alias for endkey
-    end_key?: string;
+    end_key?: Key;
 
     // Stop returning records when the specified document ID is reached.
     end_key_doc_id?: string;
@@ -987,10 +1000,10 @@ declare namespace nano {
     inclusive_end?: boolean;
 
     // Return only documents that match the specified key.
-    key?: string;
+    key?: Key;
 
     // Return only documents that match the specified keys.
-    keys?: string | string[];
+    keys?: Key | Key[];
 
     // Limit the number of the returned documents to the specified number.
     limit?: number;
@@ -1003,10 +1016,10 @@ declare namespace nano {
     stale?: string;
 
     // Return records starting with the specified key.
-    startkey?: string;
+    startkey?: Key;
 
     // Return records starting with the specified key. start_key is an alias for startkey
-    start_key?: string;
+    start_key?: Key;
 
     // Return records starting with the specified document ID.
     start_key_doc_id?: string;
@@ -1035,7 +1048,7 @@ declare namespace nano {
   interface DocumentFetchParams {
     conflicts?: boolean;
     descending?: boolean;
-    end_key?: string;
+    end_key?: Key;
     end_key_doc_id?: string;
     inclusive_end?: boolean;
     key?: string;
@@ -1043,7 +1056,7 @@ declare namespace nano {
     limit?: number;
     skip?: number;
     stale?: string;
-    start_key?: string;
+    start_key?: Key;
     start_key_doc_id?: string;
     update_seq?: boolean;
   }
@@ -1184,10 +1197,10 @@ declare namespace nano {
     descending?: boolean;
 
     // Stop returning records when the specified key is reached.
-    endkey?: any;
+    endkey?: Key;
 
     // Alias for endkey param.
-    end_key?: any;
+    end_key?: Key;
 
     // Stop returning records when the specified document ID is reached. Requires endkey to be specified for this
     // to have any effect.
@@ -1217,10 +1230,10 @@ declare namespace nano {
     inclusive_end?: boolean;
 
     // Return only documents that match the specified key.
-    key?: any;
+    key?: Key;
 
     // Return only documents where the key matches one of the keys specified in the array.
-    keys?: any[];
+    keys?: Key[];
 
     // Limit the number of the returned documents to the specified number.
     limit?: number;
@@ -1243,10 +1256,10 @@ declare namespace nano {
     stale?: string;
 
     // Return records starting with the specified key.
-    startkey?: any;
+    startkey?: Key;
 
     // Alias for startkey param
-    start_key?: any;
+    start_key?: Key;
 
     // Return records starting with the specified document ID. Requires startkey to be specified for this to have
     // any effect.
